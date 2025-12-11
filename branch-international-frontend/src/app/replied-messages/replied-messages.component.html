@@ -1,0 +1,48 @@
+<div class="container mt-4">
+  <h2 class="text-center mb-4">Replied Messages</h2>
+
+  <!-- Search Input -->
+  <div class="mb-4 d-flex justify-content-center">
+    <input 
+      type="text" 
+      class="form-control search-input" 
+      placeholder="Search by User or Message..." 
+      [(ngModel)]="searchTerm"
+      (input)="filterMessages()" 
+    />
+  </div>
+
+  <div *ngIf="filteredMessages.length === 0" class="alert alert-info text-center">
+    No messages found.
+  </div>
+
+  <div class="row g-4">
+    <div *ngFor="let message of filteredMessages" class="col-lg-6 col-md-12">
+      <div 
+        class="message-card shadow-sm p-3 rounded position-relative replied"
+        [ngClass]="{
+          'urgent': message.urgency === 3,
+          'high': message.urgency === 2,
+          'normal': message.urgency === 1
+        }"
+      >
+        <div class="d-flex justify-content-between align-items-start">
+          <div>
+            <h6 class="user-name">From: {{message.userId}}</h6>
+            <p class="message-text">{{message.messageBody}}</p>
+
+            <div *ngIf="message.customerInfo" class="customer-info mb-2">
+              <span class="badge bg-primary me-1">Loans: {{ message.customerInfo.loanHistoryCount }}</span>
+              <span class="badge bg-secondary">Status: {{ message.customerInfo.latestLoanStatus }}</span>
+            </div>
+
+            <div class="reply-box p-3 rounded">
+              <p class="mb-1"><b style="color: #4b6cb7;">Response:</b> {{message.reply}}</p>
+              <span class="badge" style="background-color: #720eb4;">Responded by {{message.respondedBy}} on {{message.respondedAt | date:'short'}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

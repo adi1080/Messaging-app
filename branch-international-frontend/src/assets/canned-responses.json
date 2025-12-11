@@ -1,0 +1,9 @@
+[
+  { "title": "Loan Status", "text": "Your loan is currently under review. We’ll notify you shortly." },
+  { "title": "Disbursement ETA", "text": "Your loan will be disbursed within 24–48 hours." },
+  { "title": "Update Account", "text": "You can update your account info in the Profile section of the app." },
+  { "title": "Processing Time", "text": "Please allow us some time to resolve this." },
+  { "title": "Case Escalation", "text": "We have escalated your case." },
+  { "title": "Appreciation", "text": "Thank you for your patience." },
+  { "title": "Support Response", "text": "Thank you for contacting support!" }
+]

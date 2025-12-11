@@ -1,0 +1,111 @@
+<div class="container mt-4">
+  <h2 class="text-center mb-4">Pending Messages</h2>
+
+  <!-- Search Input -->
+  <div class="mb-4 d-flex justify-content-center">
+    <input type="text" class="form-control search-input" placeholder="Search by User or Message..."
+      [(ngModel)]="searchTerm" (input)="filterMessages()" />
+  </div>
+
+  <div *ngIf="filteredMessages.length === 0" class="alert alert-info text-center">
+    No messages found.
+  </div>
+
+  <div class="row g-4">
+    <div *ngFor="let message of filteredMessages" class="col-lg-6 col-md-12">
+      <div class="message-card shadow-sm p-3 rounded position-relative" [ngClass]="{
+          'urgent': message.urgency === 3,
+          'high': message.urgency === 2,
+          'normal': message.urgency === 1,
+          'responded': message.respondedBy
+        }">
+        <div class="d-flex justify-content-between align-items-start">
+          <div>
+            <h6 class="user-name">From: {{message.userId}}</h6>
+            <p class="message-text">{{message.messageBody}}</p>
+            <div *ngIf="message.customerInfo" class="customer-info">
+              <span class="badge bg-primary me-1">Loans: {{ message.customerInfo.loanHistoryCount }}</span>
+              <span class="badge bg-secondary">Status: {{ message.customerInfo.latestLoanStatus }}</span>
+            </div>
+          </div>
+
+          <div class="actions d-flex align-items-center">
+            <button *ngIf="!message.respondedBy" class="btn btn-outline-primary btn-sm ms-2 me-2"
+              (click)="openRespondModal(message)">
+              Respond
+            </button>
+            <button *ngIf="!message.respondedBy" class="btn btn-outline-primary btn-sm" style="min-width: 90px;"
+              (click)="getUserDetails(message.userId)">
+              User Details
+            </button>
+            <span *ngIf="message.respondedBy" class="badge bg-success ms-2">Responded by {{message.respondedBy}}</span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Respond Modal -->
+<div class="modal fade" id="respondModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content rounded-4 shadow-lg">
+
+      <div class="modal-header bg-gradient-primary text-white">
+        <h5 class="modal-title">Respond to {{selectedMessage?.userId}}</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="mb-3">
+          <p><strong>Message:</strong> {{selectedMessage?.messageBody}}</p>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Your Reply</label>
+          <textarea class="form-control reply-textarea" [(ngModel)]="responseText" rows="4"></textarea>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Canned Responses</label>
+          <select class="form-select" (change)="insertCanned($event)">
+            <option value="">Select a canned response...</option>
+            <option *ngFor="let c of cannedResponses" [value]="c.text">{{c.title}}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button class="btn btn-primary" (click)="sendResponse()">Send</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="userDetailsModal" tabindex="-1" aria-labelledby="userDetailsModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="userDetailsModalLabel">User Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="selectedUser">
+          <p><strong>Name:</strong> {{selectedUser.userId}}</p>
+          <p><strong>Account Age:</strong> {{selectedUser.accountAgeDays}}</p>
+          <p><strong>Loan Status:</strong> {{selectedUser.latestLoanStatus}}</p>
+          <p><strong>Loan History Count:</strong> {{selectedUser.loanHistoryCount}}</p>
+          <!-- Add more fields as needed -->
+        </div>
+        <div *ngIf="!selectedUser">
+          Loading...
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

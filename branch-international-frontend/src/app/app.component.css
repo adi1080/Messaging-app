@@ -1,0 +1,27 @@
+/* Sidebar width */
+:root {
+  --sidebar-width: 250px;
+}
+
+/* Sidebar component should be fixed */
+app-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: var(--sidebar-width);
+  z-index: 1030;
+}
+
+/* Main content */
+.main-content {
+  margin-left: 0; /* default for small screens */
+  padding: 20px;
+}
+
+/* Large screens: push content to the right of sidebar */
+@media (min-width: 992px) {
+  .main-content {
+    margin-left: var(--sidebar-width);
+  }
+}

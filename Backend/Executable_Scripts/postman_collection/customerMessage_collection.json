@@ -1,0 +1,82 @@
+{
+  "info": {
+    "name": "Customer Messages API",
+    "_postman_id": "b5a9a6c0-1234-4d56-8f12-abcdef123456",
+    "description": "Collection to test /createMessage endpoint",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Create High Urgency Message",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"userId\": 101,\n  \"messageBody\": \"Hello, I want to know the status of my loan application. Please approve it soon.\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8081/messages/createMessage",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["messages","createMessage"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create Medium Urgency Message",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"userId\": 102,\n  \"messageBody\": \"I need to update my contact information.\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8081/messages/createMessage",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["messages","createMessage"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create Low Urgency Message",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"userId\": 103,\n  \"messageBody\": \"Just saying hi!\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8081/messages/createMessage",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["messages","createMessage"]
+        }
+      },
+      "response": []
+    }
+  ]
+}

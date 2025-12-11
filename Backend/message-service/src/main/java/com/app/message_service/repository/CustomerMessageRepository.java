@@ -1,0 +1,15 @@
+package com.app.message_service.repository;
+
+import com.app.message_service.entity.CustomerMessage;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+@Repository
+public interface CustomerMessageRepository extends JpaRepository<CustomerMessage, Long> {
+    List<CustomerMessage> findByRespondedByIsNull();
+
+    List<CustomerMessage> findByRespondedByIsNotNull();
+}
+
